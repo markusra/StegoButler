@@ -4,7 +4,7 @@ StegoButler is a tool that automates the bulk creation of steganography with [Op
 
 ### Requirements
 
-StegoButler needs Python 2.7 in order to run.
+StegoButler needs Python 2.7 in order to work.
 
 ### Installation
 
