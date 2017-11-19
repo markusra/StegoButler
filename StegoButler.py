@@ -21,10 +21,10 @@ stegoFolder         = "stegFiles/"
 options             = [["0_0", " --nocompress --noencrypt"], ["0_1", " --nocompress --encrypt --password=stegoIsFun"], ["1_0", " --compress --noencrypt"], ["1_1", " --compress --encrypt --password=stegoIsFun"]]
 
 cols                = ["File Name", "Message File Type", "Cover File Size", "Message File Size", "Stego File Size",
-                     "Cover Message Ratio", "Compression", "Encryption", "Stego Detected", "Estimated Hidden Data"]
+                     "Embedding Rate", "Compression", "Encryption", "Stego Detected", "Estimated Hidden Data"]
 
 cols2               = ["File Name", "Message File Type", "Cover File Size", "Message File Size",
-                     "Cover Message Ratio", "Compression", "Encryption"]
+                     "Embedding Rate", "Compression", "Encryption"]
 
 numberOfTotalFiles = len(coverFiles) * len(coverFileSizes) * len(messageFiles) * 4
 numberOfStegoFiles = numberOfTotalFiles
@@ -77,7 +77,7 @@ def generateStegoFiles():
                     fileType = mf.split(".")[1]
                     coverFileSize = float(os.stat(coverFolder + coverFile).st_size)
                     messageFileSize = float(os.stat(messageFolder + mf).st_size)
-                    coverMessageRatio = float("{0:.4f}".format(messageFileSize / coverFileSize))
+                    embeddingRate = float("{0:.4f}".format(messageFileSize / coverFileSize))
                     compression = int(opt[0].split("_")[0])
                     encryption = int(opt[0].split("_")[1])
 
@@ -89,7 +89,7 @@ def generateStegoFiles():
                         # Write to spreadsheet
                         rowID2 += 1
                         writeToExcel(sheet2, rowID2, cols2, [fileName, fileType, coverFileSize, messageFileSize,
-                                                    coverMessageRatio, compression, encryption])
+                                                    embeddingRate, compression, encryption])
 
                     else:
                         print "Generated '" + stegoFile + "' after " + "{0:.2f}".format(timeit.default_timer() - start_time) \
@@ -103,7 +103,7 @@ def generateStegoFiles():
                         # Write to spreadsheet
                         rowID += 1
                         writeToExcel(sheet, rowID, cols, [fileName, fileType, coverFileSize, messageFileSize, stegoFileSize,
-                                                coverMessageRatio, compression, encryption, stegoDetected, estimatedHiddenData])
+                                                embeddingRate, compression, encryption, stegoDetected, estimatedHiddenData])
 
 
                     # Update progressbar
